@@ -29,9 +29,7 @@ let summary = "An F# type provider for DBpedia"
 
 // Longer description of the project
 // (used as a description for NuGet package; line breaks are automatically cleaned up)
-let description = """
-  A lengthy description of your project. 
-  This can have multiple lines and will be cleaned up. """
+let description = """An F# type provider for DBpedia, allowing you to browse and query Wikipedia knowledge in a strongly typed way """
 // List of author names (for NuGet package)
 let authors = [ "Andrew Stevenson" ]
 // Tags for your project (for NuGet package)
@@ -155,13 +153,18 @@ Target "All" DoNothing
   ==> "RestorePackages"
   ==> "AssemblyInfo"
   ==> "Build"
-  ==> "RunTests"
-  ==> "All"
 
-"All" 
+
+"Build"
+  ==> "RunTests"
+  ==> "All" 
+
+"Build" 
   ==> "CleanDocs"
   ==> "GenerateDocs"
   ==> "ReleaseDocs"
+
+"Build" 
   ==> "NuGet"
   ==> "Release"
 

@@ -1,14 +1,10 @@
-#### 0.0.0-beta - October 19 2013
+
+#### 0.0.1 - July 11 2014
 * Initial release
 
-#### 0.0.1-beta - October 24 2013
-* Changed name from fsharp-project-scaffold to FSharp.ProjectScaffold
+#### 0.0.2 - July 11 2014
+* Updated NuGet package description
 
-#### 0.5.0-beta - October 29 2013
-* Improved quality of solution-wide README.md files
-
-#### 0.5.1-beta - November 6 2013
-* Improved quality of solution-wide README.md files
-
-### 1.0 - Unreleased
-* More awesome stuff comming
+#### 0.0.2 - July 30 2014
+* Resolve internal DBpedia links as provided types (e.g what used to return "http://dbpedia.org/resource/Albert_Einstein" now returns Albert_EinsteinType)
+* Initial query implementation (not yet complete, but can build SPARQL from LINQ)

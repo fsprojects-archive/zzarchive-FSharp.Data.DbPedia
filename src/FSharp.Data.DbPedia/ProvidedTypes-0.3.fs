@@ -1501,8 +1501,7 @@ module Local =
             member __.ResolveTypeName typeName : System.Type = 
                 match types |> Array.tryFind (fun ty -> ty.Name = typeName) with
                 | Some ty -> ty
-                | None    -> let typenames = String.concat "," (types |> Array.map (fun t -> t.Name))
-                             failwith (sprintf "Unknown type '%s' in namespace '%s' (contains %s)" typeName namespaceName typenames)    
+                | None    -> null    
         }
 
 
