@@ -67,7 +67,7 @@
     <Compile Include="AssemblyInfo.fs" />
     <Compile Include="ProvidedTypes-0.3.fsi" />
     <Compile Include="ProvidedTypes-0.3.fs" />
-    <Compile Include="IComposableTypeProvider.fs" />
+    <Compile Include="DbPediaMeasures.fs" />
     <Compile Include="DbPediaAccess.fs" />
     <Compile Include="DbPediaQuery.fs" />
     <Compile Include="DbPediaTypeProvider.fs" />

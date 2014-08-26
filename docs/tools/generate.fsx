@@ -6,7 +6,7 @@
 // Binaries that have XML documentation (in a corresponding generated XML file)
 let referenceBinaries = [ "FSharp.Data.DbPedia.dll" ]
 // Web site location for the generated documentation
-let website = "/FSharp.Data.DbPedia"
+let website = "."
 
 let githubLink = "http://github.com/aastevenson/dbpedia-tp"
 

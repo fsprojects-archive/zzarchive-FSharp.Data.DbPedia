@@ -17,6 +17,10 @@
     <dependencies />
   </metadata>
   <files>
-    <file src="..\bin\FSharp.ProjectTemplate.dll" target="lib/net40" />
+    <file src="..\bin\RestSharp.dll" target="lib/net40" />
+    <file src="..\bin\FSharp.Data.DbPedia.dll" target="lib/net40" />
+    <file src="..\bin\FSharp.Data.DbPedia.xml" target="lib/net40" />
+    <file src="..\bin\FSharp.Data.DbPedia.pdb" target="lib/net40" />
+    <file src="..\bin\FSharp.Core.dll" target="lib/net40" />
   </files>
 </package>

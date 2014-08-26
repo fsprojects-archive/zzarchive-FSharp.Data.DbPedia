@@ -679,6 +679,7 @@ type ProvidedSymbolType(kind: SymbolKind, args: Type list) =
     override this.GetCustomAttributes(_inherit)                                                 = notRequired "GetCustomAttributes" this.Name
     override this.GetCustomAttributes(_attributeType, _inherit)                                  = notRequired "GetCustomAttributes" this.Name
     override this.IsDefined(_attributeType, _inherit)                                            = notRequired "IsDefined" this.Name
+    override this.MakeArrayType() = ProvidedSymbolType(SymbolKind.SDArray, [this]) :> Type
 
 [<Class>]
 type ProvidedMeasureBuilder() =
@@ -701,8 +702,7 @@ type ProvidedMeasureBuilder() =
                 []) :> Type
         | v -> v
     member b.AnnotateType (basicType, annotation) = ProvidedSymbolType(Generic basicType, annotation) :> Type
-
-
+    
 [<RequireQualifiedAccess>]
 type TypeContainer =
   | Namespace of Assembly * string // namespace

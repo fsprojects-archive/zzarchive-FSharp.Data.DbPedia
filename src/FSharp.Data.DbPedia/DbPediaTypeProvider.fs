@@ -40,16 +40,18 @@ type DbPediaTypeFactory(schemaConn : DbPediaConnection) =
 
     member __.GetServiceTypes() = serviceTypes
      
-    member __.MakePropertyForPropertyOfIndividual(entityUri, propUri, propName, runtimeType:Type, propValue) =
+    member __.MakePropertyForPropertyOfIndividual(entityUri, propUri, propName, propType:Type, propValue) =
         let compileTimeType =
             match unbox<obj>(propValue) with
             | :? DbPediaIndividualBase as entity -> 
-                if runtimeType.IsArray then
+                if propType.IsArray then
                     typeof<DbPediaIndividualBase>.MakeArrayType()
                 else
                     __.MakeTypeForIndividual(entity.Uri) :> System.Type
-            | _ -> runtimeType
-            
+            | _ -> propType
+        
+        let runtimeType = if propType.IsNested && propType.IsGenericType then propType.DeclaringType else propType    // strip any units of measure info for runtime type
+
         ProvidedProperty(propName, compileTimeType, 
             GetterCode=  
                 (fun args -> 
@@ -69,15 +71,20 @@ type DbPediaTypeFactory(schemaConn : DbPediaConnection) =
             let label = System.Uri.UnescapeDataString(uri.Replace("http://dbpedia.org/resource/", "")) + "Type"
             let t = ProvidedTypeDefinition(label, Some typeof<DbPediaIndividualBase>, HideObjectMethods=true)
             t.AddMembersDelayed(fun () -> 
-                                    uri
-                                    |> schemaConn.getPropertyBag
-                                    |> List.map (fun (pUri, pLabel, pType, pValue) -> __.MakePropertyForPropertyOfIndividual(uri, pUri, pLabel, pType, pValue)))
+                uri
+                |> schemaConn.getPropertyBag
+                |> List.map (fun (pUri, pLabel, pType, pValue) -> __.MakePropertyForPropertyOfIndividual(uri, pUri, pLabel, pType, pValue)))
             serviceTypes.AddMember(t)
             typeCache.Add(uri, t)
             t
         
     member __.MakePropertyForIndividual(uri, label) =
-        ProvidedProperty(label, __.MakeTypeForIndividual(uri), GetterCode= (fun args -> <@@ new DbPediaIndividualBase( (%%(args.[0]) : DbPediaIndividualsTypeBase).Connection, uri, label ) @@>  ))
+        let p = ProvidedProperty(label, __.MakeTypeForIndividual(uri), GetterCode= (fun args -> <@@ new DbPediaIndividualBase( (%%(args.[0]) : DbPediaIndividualsTypeBase).Connection, uri, label ) @@>  ))
+        p.AddXmlDocDelayed(fun () -> 
+            match schemaConn.tryGetPropertyValue uri "http://www.w3.org/2000/01/rdf-schema#comment" with
+            | Some comment -> comment
+            | None -> "No description available." )
+        p
 
 // This defines the type provider. When compiled to a DLL it can be added as a reference to an F#
 // command-line compilation, script or project.
@@ -91,24 +98,51 @@ type DbPediaTypeProvider(config: TypeProviderConfig) as this =
     let namespaceName = "FSharp.Data"
     let thisAssembly = Assembly.GetExecutingAssembly()
 
-    let createTypesForStaticParameters(typeName, locale, limit) = 
+    let createTypesForStaticParameters(typeName, locale, limit, sample) = 
         let schemaConn = DbPediaConnection(locale, limit)
         let typeFactory = DbPediaTypeFactory(schemaConn)
         let instantiatedTy = ProvidedTypeDefinition(thisAssembly, namespaceName, typeName, Some typeof<obj>)
 
+        let makeTypeForIndividualsX (uri: string) (letter: char) =
+            let label = uri.Replace("http://dbpedia.org/ontology/", "").Replace("http://dbpedia.org/resource/Category:", "")
+            let t = ProvidedTypeDefinition(label + "Individuals" + letter.ToString() + "Type", 
+                                           Some typeof<DbPediaIndividualsTypeBase>, HideObjectMethods=true)
+            t.AddMembersDelayed(fun () -> 
+                schemaConn.getIndividualsByLetter uri letter
+                |> Array.map (fun e -> typeFactory.MakePropertyForIndividual e) 
+                |> Array.toList )
+            typeFactory.GetServiceTypes().AddMember(t)
+            t
+
+        let makePropertyXForIndividualsAZType (uri: string) (letter: char) =
+            ProvidedProperty(letter.ToString(), makeTypeForIndividualsX uri letter, 
+                             GetterCode= (fun args -> <@@ new DbPediaIndividualsTypeBase( (%%(args.[0]) : DbPediaIndividualsTypeBase).Connection) @@> ))    
+
+        let makeTypeForIndividualsAZ (uri : string) =
+            let label = uri.Replace("http://dbpedia.org/ontology/", "").Replace("http://dbpedia.org/resource/Category:", "")
+            let t = ProvidedTypeDefinition(label + "IndividualsAZType", Some typeof<DbPediaIndividualsTypeBase>, HideObjectMethods=true)
+            t.AddMembersDelayed(fun () -> 
+                ['A'..'Z'] 
+                |> List.map (makePropertyXForIndividualsAZType uri) )
+            typeFactory.GetServiceTypes().AddMember(t)
+            t
+
         let makeTypeForIndividuals (uri : string) =
-            let t = ProvidedTypeDefinition(uri.Replace("http://dbpedia.org/ontology/", "") + "IndividualsType", Some typeof<DbPediaIndividualsTypeBase>, HideObjectMethods=true)
-            t.AddMembersDelayed(fun () -> uri
-                                            |> schemaConn.getIndividuals
-                                            |> Array.map (fun e -> typeFactory.MakePropertyForIndividual e) 
-                                            |> Array.toList )
+            let label = uri.Replace("http://dbpedia.org/ontology/", "").Replace("http://dbpedia.org/resource/Category:", "")
+            let t = ProvidedTypeDefinition(label + "IndividualsType", Some typeof<DbPediaIndividualsTypeBase>, HideObjectMethods=true)
+            t.AddMembersDelayed(fun () -> 
+                uri
+                |> schemaConn.getIndividuals
+                |> Array.map (fun e -> typeFactory.MakePropertyForIndividual e) 
+                |> Array.toList )
             typeFactory.GetServiceTypes().AddMember(t)
             t
 
         let rec makeTypeForOntologyType (uri : string) =
             let label = uri.Replace("http://dbpedia.org/ontology/", "")
-            let t = ProvidedTypeDefinition(label + "Type", Some typeof<DbPediaOntologyTypeBase>, HideObjectMethods=true)
+            let t = ProvidedTypeDefinition(label + "OntologyType", Some typeof<DbPediaOntologyTypeBase>, HideObjectMethods=true)
             t.AddMemberDelayed(fun () -> ProvidedProperty("Individuals", makeTypeForIndividuals uri, GetterCode= (fun args -> <@@ new DbPediaIndividualsTypeBase( (%%(args.[0]) : DbPediaOntologyTypeBase).Connection ) @@> )))
+            t.AddMemberDelayed(fun () -> ProvidedProperty("IndividualsAZ", makeTypeForIndividualsAZ uri, GetterCode= (fun args -> <@@ new DbPediaIndividualsTypeBase( (%%(args.[0]) : DbPediaOntologyTypeBase).Connection ) @@> )))
             t.AddMembersDelayed(fun () -> uri
                                             |> schemaConn.getOntologySubclasses
                                             |> Array.map (fun topic -> makePropertyForOntologyType topic) 
@@ -128,30 +162,71 @@ type DbPediaTypeProvider(config: TypeProviderConfig) as this =
             typeFactory.GetServiceTypes().AddMember(t)
             t
 
+        let rec makeTypeForCategoryType (uri : string) =
+            let label = uri.Replace("http://dbpedia.org/resource/Category", "")
+            let t = ProvidedTypeDefinition(label + "CategoryType", Some typeof<DbPediaCategoryTypeBase>, HideObjectMethods=true)
+            t.AddMemberDelayed(fun () -> ProvidedProperty("Individuals", makeTypeForIndividuals uri, GetterCode= (fun args -> <@@ new DbPediaIndividualsTypeBase( (%%(args.[0]) : DbPediaCategoryTypeBase).Connection ) @@> )))
+            t.AddMemberDelayed(fun () -> ProvidedProperty("IndividualsAZ", makeTypeForIndividualsAZ uri, GetterCode= (fun args -> <@@ new DbPediaIndividualsTypeBase( (%%(args.[0]) : DbPediaCategoryTypeBase).Connection ) @@> )))
+            t.AddMembersDelayed(fun () -> 
+                uri
+                |> schemaConn.getCategorySubclasses
+                |> Array.map (fun topic -> makePropertyForCategoryType topic) 
+                |> Array.toList )
+            typeFactory.GetServiceTypes().AddMember(t)
+            t
+
+        and makePropertyForCategoryType (uri, label) =
+            ProvidedProperty(label, makeTypeForCategoryType uri, GetterCode= (fun args -> <@@ new DbPediaCategoryTypeBase( (%%(args.[0]) : DbPediaCategoryTypeBase).Connection, uri ) @@> ))    
+        
+        let categoriesType =
+            let t = ProvidedTypeDefinition("MainTopicsType", Some typeof<DbPediaCategoryTypeBase>, HideObjectMethods=true)
+            t.AddMembersDelayed(fun () -> 
+                "http://dbpedia.org/resource/Category:Main_topic_classifications"
+                |> schemaConn.getCategorySubclasses
+                |> Array.map (fun topic -> makePropertyForCategoryType topic)
+                |> Array.toList)
+            typeFactory.GetServiceTypes().AddMember(t)
+            t
+
         let dbPediaDataContextType =
             let t = ProvidedTypeDefinition("DbPediaDataContext", Some typeof<DbPediaDataContextBase>, HideObjectMethods=true)
             t.AddMember(ProvidedProperty("Ontology", ontologyType, 
                                             GetterCode= (fun args -> <@@ new DbPediaOntologyTypeBase( (%%(args.[0]) : DbPediaDataContextBase).Connection, "Ontology" ) @@> )))
+            t.AddMember(ProvidedProperty("Wikipedia Categories", categoriesType, 
+                                            GetterCode= (fun args -> <@@ new DbPediaCategoryTypeBase( (%%(args.[0]) : DbPediaDataContextBase).Connection, "Main topic categories" ) @@> )))
             typeFactory.GetServiceTypes().AddMember(t)
             t
 
-        instantiatedTy.AddMember(ProvidedMethod("GetDataContext", [], dbPediaDataContextType, IsStaticMethod=true, 
-                                   InvokeCode= (fun _ -> <@@ new DbPediaDataContextBase(locale, limit) @@>)))
+        if sample = "" then
+            // specific dbpedia resource is not specified, so start at the root
+            instantiatedTy.AddMember(ProvidedMethod("GetDataContext", [], dbPediaDataContextType, IsStaticMethod=true, 
+                                        InvokeCode= (fun _ -> <@@ new DbPediaDataContextBase(locale, limit) @@>)))    
+        elif sample.StartsWith("http://dbpedia.org/resource/") then
+            // specific dbpedia resource is specified, so resolve it and provide its type
+            let label = sample.Replace("http://dbpedia.org/resource/", "").Replace("_", " ")
+            ProvidedMethod("GetSample", [], typeFactory.MakeTypeForIndividual(sample), IsStaticMethod=true, 
+                InvokeCode= (fun _ -> <@@ new DbPediaIndividualBase(new DbPediaConnection(locale, limit), sample, label) @@>))
+            |> instantiatedTy.AddMember
+        else
+            raise <| ArgumentException("Static parameter 'Sample' expected a string that starts with 'http://dbpedia.org/resource/' but was given: " + sample)
+        
         instantiatedTy.AddMember(typeFactory.GetServiceTypes())
         instantiatedTy
 
     let defaultLocale = "en"
     let defaultLimit = 2000
-    let dbPediaType = createTypesForStaticParameters("DbPedia", defaultLocale, defaultLimit)
+    let dbPediaType = createTypesForStaticParameters("DbPedia", defaultLocale, defaultLimit, "")
 
     let paramDbPediaType =
         let t = ProvidedTypeDefinition(thisAssembly, namespaceName, "DbPediaProvider", Some typeof<obj>)
-        let langParam = ProvidedStaticParameter("locale", typeof<string>)
+        let sampleParam = ProvidedStaticParameter("Sample", typeof<string>, "")
+        let langParam = ProvidedStaticParameter("locale", typeof<string>, defaultLocale)
         let limitParam = ProvidedStaticParameter("individualsLimit", typeof<int>, defaultLimit)
-        t.DefineStaticParameters([langParam; limitParam], fun typeName parameterValues ->
+        t.DefineStaticParameters([langParam; limitParam; sampleParam], fun typeName parameterValues ->
             match parameterValues with
-            | [| :? string as locale; :? int as limit |] -> createTypesForStaticParameters(typeName, locale, limit)
-            | _ -> failwith "unexpected parameter values, expected (string, int)")
+            | [| :? string as locale; :? int as limit; :? string as sample |] -> 
+                createTypesForStaticParameters(typeName, locale, limit, sample)
+            | _ -> failwith "unexpected static parameter values, expected (string, string, int)")
         t
 
     let searchDbPediaType =
@@ -174,23 +249,17 @@ type DbPediaTypeProvider(config: TypeProviderConfig) as this =
                 
                 let t = ProvidedTypeDefinition(thisAssembly, namespaceName, typeName, Some typeof<obj>)
                 t.AddMember(ProvidedMethod("SearchResults", [], searchResultsType ontology searchTerm, IsStaticMethod=true,
-                                           InvokeCode= (fun args -> <@@ new DbPediaIndividualsTypeBase(new DbPediaConnection(defaultLocale, defaultLimit)) @@> ) ))
+                                           InvokeCode= (fun args -> 
+                                                           let defaultLocaleValue = defaultLocale 
+                                                           let defaultLimitValue = defaultLimit 
+                                                           <@@ new DbPediaIndividualsTypeBase(new DbPediaConnection(defaultLocaleValue, defaultLimitValue)) @@> ) ))
                 t.AddMember(typeFactory.GetServiceTypes())
                 t
             | _ -> failwith "unexpected parameter values, expected (string, string)")
         t
-        
+
     // add the root items to the namespace
     do this.AddNamespace(namespaceName, [dbPediaType; paramDbPediaType; searchDbPediaType])
     
-    interface FSharp.ProvidedTypes.Combinators.IComposableTypeProvider with        
-        member x.GetTypeById(id: string): Type option = 
-            if id.StartsWith("http://dbpedia.org/resource/") then
-                let schemaConn = DbPediaConnection(defaultLocale, defaultLimit)
-                let typeFactory = DbPediaTypeFactory(schemaConn)
-                Some (typeFactory.MakeTypeForIndividual(id) :> Type)
-            else
-                None
-
 [<assembly:TypeProviderAssembly>] 
 do()
