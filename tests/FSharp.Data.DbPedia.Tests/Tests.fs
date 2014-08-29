@@ -17,19 +17,14 @@ let showImage (url : string) =
 let bingMaps (coord : DbPediaAccess.Geography) =
     System.Diagnostics.Process.Start(sprintf "http://bing.com/maps/default.aspx?cp=%f~%f&lvl=16" coord.latitude coord.longitude)
 
-
 let data = FSharp.Data.DbPedia.GetDataContext()
-
-data.``Wikipedia Categories``.History.``History-related lists``.``Military lists of World War II``.``Lists of military units and formations of World War II``.Individuals.
-
-
+let einstein = data.Ontology.Agent.Person.Scientist.Individuals.``Albert Einstein``
+einstein.``abstract``
 
 let massOfEarth = data.Ontology.CelestialBody.Planet.IndividualsAZ.E.Earth
-let massOfMoon = data.Ontology.CelestialBody.Planet.IndividualsAZ.M.Moon.
-let massOfMercury = data.Ontology.CelestialBody.Planet.IndividualsAZ.M.``Mercury (planet)``.
+//let massOfMoon = data.Ontology.CelestialBody.Planet.IndividualsAZ.M.Moon.
+//let massOfMercury = data.Ontology.CelestialBody.Planet.IndividualsAZ.M.``Mercury (planet)``.
 //let massOfVenus = data.Ontology.CelestialBody.Planet.IndividualsAZ.V.Venus.mass
-let massOfSun = data.``Wikipedia Categories``.Nature.``Natural sciences``.``Physical sciences``.Astronomy.``Astronomical objects``.Stars.Sun.Individuals.Sun
-let massOfMoon2 = data.``Wikipedia Categories``.Nature.``Natural sciences``.``Physical sciences``.Astronomy.``Astronomical objects``.Planets.``Planets of the Solar System``.Venus.Individuals.``Aspec
 
 //let mercuryDistanceFromSun  = 57910000.0<km> * AU_per_km 
 //let venusDistanceFromSun    = 0.723332<AU> 

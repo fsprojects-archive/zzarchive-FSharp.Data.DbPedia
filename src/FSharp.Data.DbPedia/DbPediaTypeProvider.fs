@@ -55,7 +55,7 @@ type DbPediaTypeFactory(schemaConn : DbPediaConnection) =
         ProvidedProperty(propName, compileTimeType, 
             GetterCode=  
                 (fun args -> 
-                        let connExpr = <@@ (%%(args.[0]) : DbPediaIndividualBase).Connection @@>
+                        let connExpr = <@@ ((%%(args.[0]) : DbPediaIndividualBase) :> IDbPediaObject).Connection @@>
                         let minfo = 
                             if runtimeType.IsArray then
                                 let ty = runtimeType.GetElementType() 
@@ -79,7 +79,7 @@ type DbPediaTypeFactory(schemaConn : DbPediaConnection) =
             t
         
     member __.MakePropertyForIndividual(uri, label) =
-        let p = ProvidedProperty(label, __.MakeTypeForIndividual(uri), GetterCode= (fun args -> <@@ new DbPediaIndividualBase( (%%(args.[0]) : DbPediaIndividualsTypeBase).Connection, uri, label ) @@>  ))
+        let p = ProvidedProperty(label, __.MakeTypeForIndividual(uri), GetterCode= (fun args -> <@@ new DbPediaIndividualBase( ((%%(args.[0]) : DbPediaIndividualsTypeBase) :> IDbPediaObject).Connection, uri, label ) @@>  ))
         p.AddXmlDocDelayed(fun () -> 
             match schemaConn.tryGetPropertyValue uri "http://www.w3.org/2000/01/rdf-schema#comment" with
             | Some comment -> comment
@@ -116,7 +116,7 @@ type DbPediaTypeProvider(config: TypeProviderConfig) as this =
 
         let makePropertyXForIndividualsAZType (uri: string) (letter: char) =
             ProvidedProperty(letter.ToString(), makeTypeForIndividualsX uri letter, 
-                             GetterCode= (fun args -> <@@ new DbPediaIndividualsTypeBase( (%%(args.[0]) : DbPediaIndividualsTypeBase).Connection) @@> ))    
+                             GetterCode= (fun args -> <@@ new DbPediaIndividualsTypeBase( ((%%(args.[0]) : DbPediaIndividualsTypeBase) :> IDbPediaObject).Connection) @@> ))
 
         let makeTypeForIndividualsAZ (uri : string) =
             let label = uri.Replace("http://dbpedia.org/ontology/", "").Replace("http://dbpedia.org/resource/Category:", "")
@@ -141,8 +141,8 @@ type DbPediaTypeProvider(config: TypeProviderConfig) as this =
         let rec makeTypeForOntologyType (uri : string) =
             let label = uri.Replace("http://dbpedia.org/ontology/", "")
             let t = ProvidedTypeDefinition(label + "OntologyType", Some typeof<DbPediaOntologyTypeBase>, HideObjectMethods=true)
-            t.AddMemberDelayed(fun () -> ProvidedProperty("Individuals", makeTypeForIndividuals uri, GetterCode= (fun args -> <@@ new DbPediaIndividualsTypeBase( (%%(args.[0]) : DbPediaOntologyTypeBase).Connection ) @@> )))
-            t.AddMemberDelayed(fun () -> ProvidedProperty("IndividualsAZ", makeTypeForIndividualsAZ uri, GetterCode= (fun args -> <@@ new DbPediaIndividualsTypeBase( (%%(args.[0]) : DbPediaOntologyTypeBase).Connection ) @@> )))
+            t.AddMemberDelayed(fun () -> ProvidedProperty("Individuals", makeTypeForIndividuals uri, GetterCode= (fun args -> <@@ new DbPediaIndividualsTypeBase( ((%%(args.[0]) : DbPediaOntologyTypeBase) :> IDbPediaObject).Connection ) @@> )))
+            t.AddMemberDelayed(fun () -> ProvidedProperty("IndividualsAZ", makeTypeForIndividualsAZ uri, GetterCode= (fun args -> <@@ new DbPediaIndividualsTypeBase( ((%%(args.[0]) : DbPediaOntologyTypeBase) :> IDbPediaObject).Connection ) @@> )))
             t.AddMembersDelayed(fun () -> uri
                                             |> schemaConn.getOntologySubclasses
                                             |> Array.map (fun topic -> makePropertyForOntologyType topic) 
@@ -151,7 +151,7 @@ type DbPediaTypeProvider(config: TypeProviderConfig) as this =
             t
 
         and makePropertyForOntologyType (uri, label) =
-            ProvidedProperty(label, makeTypeForOntologyType uri, GetterCode= (fun args -> <@@ new DbPediaOntologyTypeBase( (%%(args.[0]) : DbPediaOntologyTypeBase).Connection, uri ) @@> ))    
+            ProvidedProperty(label, makeTypeForOntologyType uri, GetterCode= (fun args -> <@@ new DbPediaOntologyTypeBase( ((%%(args.[0]) : DbPediaOntologyTypeBase) :> IDbPediaObject).Connection, uri ) @@> ))
 
         let ontologyType =
             let t = ProvidedTypeDefinition("OntologyType", Some typeof<DbPediaOntologyTypeBase>, HideObjectMethods=true)
@@ -165,8 +165,8 @@ type DbPediaTypeProvider(config: TypeProviderConfig) as this =
         let rec makeTypeForCategoryType (uri : string) =
             let label = uri.Replace("http://dbpedia.org/resource/Category", "")
             let t = ProvidedTypeDefinition(label + "CategoryType", Some typeof<DbPediaCategoryTypeBase>, HideObjectMethods=true)
-            t.AddMemberDelayed(fun () -> ProvidedProperty("Individuals", makeTypeForIndividuals uri, GetterCode= (fun args -> <@@ new DbPediaIndividualsTypeBase( (%%(args.[0]) : DbPediaCategoryTypeBase).Connection ) @@> )))
-            t.AddMemberDelayed(fun () -> ProvidedProperty("IndividualsAZ", makeTypeForIndividualsAZ uri, GetterCode= (fun args -> <@@ new DbPediaIndividualsTypeBase( (%%(args.[0]) : DbPediaCategoryTypeBase).Connection ) @@> )))
+            t.AddMemberDelayed(fun () -> ProvidedProperty("Individuals", makeTypeForIndividuals uri, GetterCode= (fun args -> <@@ new DbPediaIndividualsTypeBase( ((%%(args.[0]) : DbPediaCategoryTypeBase) :> IDbPediaObject).Connection ) @@> )))
+            t.AddMemberDelayed(fun () -> ProvidedProperty("IndividualsAZ", makeTypeForIndividualsAZ uri, GetterCode= (fun args -> <@@ new DbPediaIndividualsTypeBase( ((%%(args.[0]) : DbPediaCategoryTypeBase) :> IDbPediaObject).Connection ) @@> )))
             t.AddMembersDelayed(fun () -> 
                 uri
                 |> schemaConn.getCategorySubclasses
@@ -176,7 +176,7 @@ type DbPediaTypeProvider(config: TypeProviderConfig) as this =
             t
 
         and makePropertyForCategoryType (uri, label) =
-            ProvidedProperty(label, makeTypeForCategoryType uri, GetterCode= (fun args -> <@@ new DbPediaCategoryTypeBase( (%%(args.[0]) : DbPediaCategoryTypeBase).Connection, uri ) @@> ))    
+            ProvidedProperty(label, makeTypeForCategoryType uri, GetterCode= (fun args -> <@@ new DbPediaCategoryTypeBase( ((%%(args.[0]) : DbPediaCategoryTypeBase) :> IDbPediaObject).Connection, uri ) @@> ))
         
         let categoriesType =
             let t = ProvidedTypeDefinition("MainTopicsType", Some typeof<DbPediaCategoryTypeBase>, HideObjectMethods=true)
@@ -190,10 +190,16 @@ type DbPediaTypeProvider(config: TypeProviderConfig) as this =
 
         let dbPediaDataContextType =
             let t = ProvidedTypeDefinition("DbPediaDataContext", Some typeof<DbPediaDataContextBase>, HideObjectMethods=true)
-            t.AddMember(ProvidedProperty("Ontology", ontologyType, 
-                                            GetterCode= (fun args -> <@@ new DbPediaOntologyTypeBase( (%%(args.[0]) : DbPediaDataContextBase).Connection, "Ontology" ) @@> )))
-            t.AddMember(ProvidedProperty("Wikipedia Categories", categoriesType, 
-                                            GetterCode= (fun args -> <@@ new DbPediaCategoryTypeBase( (%%(args.[0]) : DbPediaDataContextBase).Connection, "Main topic categories" ) @@> )))
+            let ontologyProperty = 
+                ProvidedProperty("Ontology", ontologyType, 
+                    GetterCode= (fun args -> <@@ new DbPediaOntologyTypeBase( ((%%(args.[0]) : DbPediaDataContextBase) :> IDbPediaObject).Connection, "Ontology" ) @@> ))
+            ontologyProperty.AddXmlDoc("The DBpedia Ontology is a shallow, cross-domain ontology, which has been manually created based on the most commonly used infoboxes within Wikipedia. The ontology currently covers 529 classes which form a subsumption hierarchy and are described by 2,333 different properties.")
+            let categoryProperty = 
+                ProvidedProperty("Wikipedia Categories", categoriesType, 
+                    GetterCode= (fun args -> <@@ new DbPediaCategoryTypeBase( ((%%(args.[0]) : DbPediaDataContextBase) :> IDbPediaObject).Connection, "Main topic categories" ) @@> ))
+            categoryProperty.AddXmlDoc("These Wikipedia categories are represented using SKOS (Simple Knowledge Organization System), of which a hierarchical subset is presented here.")
+            t.AddMember(ontologyProperty)
+            t.AddMember(categoryProperty)
             typeFactory.GetServiceTypes().AddMember(t)
             t
 

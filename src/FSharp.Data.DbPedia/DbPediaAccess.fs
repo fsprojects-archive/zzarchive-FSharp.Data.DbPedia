@@ -288,7 +288,7 @@ type DbPediaConnection(locale: string, limit: int) as this =
 
     member __.getIndividuals (uri : string) =
         let predicate = if uri.StartsWith("http://dbpedia.org/ontology/") then "rdf:type" else "dcterms:subject"
-        let query = sprintf "SELECT * WHERE {?uri %s <%s>} ORDER BY ?uri LIMIT %d" predicate uri limit
+        let query = sprintf "SELECT ?uri WHERE {?uri %s <%s>} ORDER BY ?uri LIMIT %d" predicate uri limit
 
         let data = __.ExecuteRequest query
         data?results?bindings.AsArray()
@@ -312,8 +312,10 @@ type DbPediaConnection(locale: string, limit: int) as this =
                             let label = r?label?value.AsString()
                             uriString, label)
 
+and IDbPediaObject =
+    abstract member Connection : DbPediaConnection
+
 and DbPediaIndividualBase(conn: DbPediaConnection, uri, label) =
-    member __.Connection = conn
     member __.Uri = uri
     member __.Name = label
     member __.Abstract = conn.tryGetPropertyValue<string> uri "http://dbpedia.org/ontology/abstract"
@@ -321,12 +323,17 @@ and DbPediaIndividualBase(conn: DbPediaConnection, uri, label) =
     member __.GetProperties() = (conn.getPropertyBag uri) |> List.map (fun (u,l,t,v) -> u,l,t)
     member __.GetPropertyValue(propertyUri) = conn.getPropertyValues uri propertyUri
 
+    interface IDbPediaObject with
+        member __.Connection = conn
+
 type DbPediaDataContextBase(locale: string, limit: int) =
     let conn = DbPediaConnection(locale, limit)
-    member __.Connection = conn
+    interface IDbPediaObject with
+        member __.Connection = conn
 
 type DbPediaIndividualsTypeBase(conn: DbPediaConnection) =
-    member __.Connection = conn
+    interface IDbPediaObject with
+        member __.Connection = conn
 
 type DbPediaOntologyTypeBase(conn: DbPediaConnection, uri: string) as this =
     let individuals = conn.getIndividuals uri
@@ -377,7 +384,8 @@ type DbPediaOntologyTypeBase(conn: DbPediaConnection, uri: string) as this =
         member x.Expression = Expression.Constant(x, typeof<IQueryable<DbPediaIndividualBase>>) :> Expression
         member x.ElementType = typeof<DbPediaIndividualBase>
 
-    member __.Connection = conn
+    interface IDbPediaObject with
+        member __.Connection = conn
 
 type DbPediaCategoryTypeBase(conn: DbPediaConnection, uri: string) as this =
     let individuals = conn.getIndividuals uri
@@ -428,4 +436,5 @@ type DbPediaCategoryTypeBase(conn: DbPediaConnection, uri: string) as this =
         member x.Expression = Expression.Constant(x, typeof<IQueryable<DbPediaIndividualBase>>) :> Expression
         member x.ElementType = typeof<DbPediaIndividualBase>
 
-    member __.Connection = conn
+    interface IDbPediaObject with
+        member __.Connection = conn
