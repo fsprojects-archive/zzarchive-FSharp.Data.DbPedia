@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8"/>
+    <title>F# Data: DBpedia Provider
+</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <meta name="description" content="An F# type provider for DBpedia"/>
+    <meta name="author" content="Andrew Stevenson"/>
+
+    <script src="https://code.jquery.com/jquery-1.8.0.js"></script>
+    <script src="https://code.jquery.com/ui/1.8.23/jquery-ui.js"></script>
+    <script src="https://netdna.bootstrapcdn.com/twitter-bootstrap/2.2.1/js/bootstrap.min.js"></script>
+    <link href="https://netdna.bootstrapcdn.com/twitter-bootstrap/2.2.1/css/bootstrap-combined.min.css" rel="stylesheet"/>
+
+    <link type="text/css" rel="stylesheet" href="./content/style.css" />
+    <script type="text/javascript" src="./content/tips.js"></script>
+    <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
+    <!--[if lt IE 9]>
+      <script src="https://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+    <div class="container">
+      <div class="masthead">
+        <ul class="nav nav-pills pull-right">
+          <li><a href="http://fsharp.org">fsharp.org</a></li>
+          <li><a href="https://github.com/fsprojects/FSharp.Data.DbPedia">github page</a></li>
+        </ul>
+        <h3 class="muted"><a href="./index.html">FSharp.Data.DbPedia</a></h3>
+      </div>
+      <hr />
+      <div class="row">
+        <div class="span9" id="main">
+          
+<h1>F# Data: DBpedia Provider</h1>
+
+<p>The <a href="http://www.dbpedia.org">DBpedia graph database</a> is a "crowd-sourced community effort to
+extract structured information from <a href="http://wikipedia.org">Wikipedia</a> and make this information
+available on the web." The English version of DBpedia describes 4.0 million things, out of which 
+3.22 million are classified in a consistent ontology.</p>
+
+<p>The DBpedia type provider puts this information at your fingertips, giving you strongly-typed
+access to the extensive knowledge on Wikipedia. This article provides a brief introduction showing
+some of the features.</p>
+
+<h2>Introducing the provider</h2>
+
+<p>The following example loads the <code>FSharp.Data.DbPedia.dll</code> library (in F# Interactive), 
+initializes a connection to DBpedia using the <code>GetDataContext</code> method:</p>
+
+<table class="pre"><tr><td class="lines"><pre class="fssnip">
+<span class="l">1: </span>
+<span class="l">2: </span>
+<span class="l">3: </span>
+<span class="l">4: </span>
+</pre>
+</td>
+<td class="snippet"><pre class="fssnip">
+<span class="prep">#r</span> <span class="s">&quot;</span><span class="s">.</span><span class="s">.</span><span class="s">/</span><span class="s">.</span><span class="s">.</span><span class="s">/</span><span class="s">bin</span><span class="s">/</span><span class="s">FSharp</span><span class="s">.</span><span class="s">Data</span><span class="s">.</span><span class="s">DbPedia</span><span class="s">.</span><span class="s">dll</span><span class="s">&quot;</span>
+<span class="k">open</span> <span onmouseout="hideTip(event, 'fs1', 1)" onmouseover="showTip(event, 'fs1', 1)" class="i">FSharp</span><span class="o">.</span><span onmouseout="hideTip(event, 'fs2', 2)" onmouseover="showTip(event, 'fs2', 2)" class="i">Data</span>
+
+<span class="k">let</span> <span onmouseout="hideTip(event, 'fs3', 3)" onmouseover="showTip(event, 'fs3', 3)" class="i">data</span> <span class="o">=</span> <span onmouseout="hideTip(event, 'fs4', 4)" onmouseover="showTip(event, 'fs4', 4)" class="i">DbPedia</span><span class="o">.</span><span onmouseout="hideTip(event, 'fs5', 5)" onmouseover="showTip(event, 'fs5', 5)" class="i">GetDataContext</span>()</pre>
+</td>
+</tr>
+</table>
+
+<h3>Exploring the DBpedia ontology</h3>
+
+<p>Many entities in DBpedia are organized into a 
+<a href="http://mappings.dbpedia.org/server/ontology/classes/">hierarchical ontology</a>
+of topics which can be accessed by typing <code>data.Ontology.</code> and exploring the 
+available data sources in the autocomplete. For example, the following snippet 
+retrieves scientists and then looks at the details of Albert Einstein:</p>
+
+<table class="pre"><tr><td class="lines"><pre class="fssnip">
+<span class="l">1: </span>
+<span class="l">2: </span>
+<span class="l">3: </span>
+</pre>
+</td>
+<td class="snippet"><pre class="fssnip">
+<span class="k">let</span> <span onmouseout="hideTip(event, 'fs6', 6)" onmouseover="showTip(event, 'fs6', 6)" class="i">scientists</span> <span class="o">=</span> <span onmouseout="hideTip(event, 'fs3', 7)" onmouseover="showTip(event, 'fs3', 7)" class="i">data</span><span class="o">.</span><span onmouseout="hideTip(event, 'fs7', 8)" onmouseover="showTip(event, 'fs7', 8)" class="i">Ontology</span><span class="o">.</span><span onmouseout="hideTip(event, 'fs8', 9)" onmouseover="showTip(event, 'fs8', 9)" class="i">Agent</span><span class="o">.</span><span onmouseout="hideTip(event, 'fs9', 10)" onmouseover="showTip(event, 'fs9', 10)" class="i">Person</span><span class="o">.</span><span onmouseout="hideTip(event, 'fs10', 11)" onmouseover="showTip(event, 'fs10', 11)" class="i">Scientist</span><span class="o">.</span><span onmouseout="hideTip(event, 'fs11', 12)" onmouseover="showTip(event, 'fs11', 12)" class="i">Individuals</span>
+<span onmouseout="hideTip(event, 'fs6', 13)" onmouseover="showTip(event, 'fs6', 13)" class="i">scientists</span><span class="o">.</span><span class="i">``Albert Einstein``</span><span class="o">.</span><span class="i">dateOfBirth</span>      <span class="c">// returns 1879</span>
+<span onmouseout="hideTip(event, 'fs6', 14)" onmouseover="showTip(event, 'fs6', 14)" class="i">scientists</span><span class="o">.</span><span class="i">``Albert Einstein``</span><span class="o">.</span><span class="i">residence</span>        <span class="c">// returns &quot;Germany, Italy, Switzerland, Austria, Belgium, United States&quot;</span></pre>
+</td>
+</tr>
+</table>
+
+<h4>Internal DBpedia links</h4>
+
+<p>Sometimes an individual's property is a URL link instead of raw data. These URLs can be external
+links (e.g. to a <a href="http://freebase.com">Freebase</a> entity), but often they are links to other DBpedia
+entities. The DBpedia type provider automatically recognizes these links and provides a helpful
+<code>(dbpedia ref)</code> annotation to such properties.</p>
+
+<p><img src="../files/img/dbpediaref.png" alt="" /></p>
+
+<p>These properties can be expanded to reveal further structure and properties.</p>
+
+<table class="pre"><tr><td class="lines"><pre class="fssnip">
+<span class="l">1: </span>
+<span class="l">2: </span>
+</pre>
+</td>
+<td class="snippet"><pre class="fssnip">
+<span onmouseout="hideTip(event, 'fs6', 15)" onmouseover="showTip(event, 'fs6', 15)" class="i">scientists</span><span class="o">.</span><span class="i">``Albert Einstein``</span><span class="o">.</span><span class="i">``academicAdvisor (dbpedia ref)``</span><span class="o">.</span><span class="i">givenName</span>      <span class="c">// returns &quot;Heinrich Friedrich&quot;</span>
+<span onmouseout="hideTip(event, 'fs6', 16)" onmouseover="showTip(event, 'fs6', 16)" class="i">scientists</span><span class="o">.</span><span class="i">``Albert Einstein``</span><span class="o">.</span><span class="i">``academicAdvisor (dbpedia ref)``</span><span class="o">.</span><span class="i">``almaMater (dbpedia ref)``</span><span class="o">.</span><span class="i">established</span>    <span class="c">// 1558</span></pre>
+</td>
+</tr>
+</table>
+
+<h3>Searching for Individuals</h3>
+
+<p>There are several options to quickly find an individual in DBpedia's immense ontology.
+The first is to use <code>.Individuals.</code> on any ontology topic (as we did with scientists above)
+and rely on the editor's intellisense to automatically filter members as you start typing a name.</p>
+
+<p>The second option is to use <code>.IndividualsAZ</code> where the individuals are organized into 26 buckets
+corresponding to their first letter. This can be helpful when the number of individuals exceeds
+the maximum limit retrieved at a time (default 2000) causing your desired individual to not appear.</p>
+
+<table class="pre"><tr><td class="lines"><pre class="fssnip">
+<span class="l">1: </span>
+<span class="l">2: </span>
+</pre>
+</td>
+<td class="snippet"><pre class="fssnip">
+<span onmouseout="hideTip(event, 'fs3', 17)" onmouseover="showTip(event, 'fs3', 17)" class="i">data</span><span class="o">.</span><span onmouseout="hideTip(event, 'fs7', 18)" onmouseover="showTip(event, 'fs7', 18)" class="i">Ontology</span><span class="o">.</span><span class="i">CelestialBody</span><span class="o">.</span><span class="i">Planet</span><span class="o">.</span><span class="i">Individuals</span>              <span class="c">// Saturn doesn&#39;t appear here</span>
+<span onmouseout="hideTip(event, 'fs3', 19)" onmouseover="showTip(event, 'fs3', 19)" class="i">data</span><span class="o">.</span><span onmouseout="hideTip(event, 'fs7', 20)" onmouseover="showTip(event, 'fs7', 20)" class="i">Ontology</span><span class="o">.</span><span class="i">CelestialBody</span><span class="o">.</span><span class="i">Planet</span><span class="o">.</span><span class="i">IndividualsAZ</span><span class="o">.</span><span class="i">S</span><span class="o">.</span><span class="i">Saturn</span>   <span class="c">// there it is!</span></pre>
+</td>
+</tr>
+</table>
+
+<p>The third option is to use a special pair of static parameters to specify:</p>
+
+<ol>
+<li>The <a href="http://mappings.dbpedia.org/server/ontology/classes/">ontology topic</a> to search within</li>
+<li>A search term</li>
+</ol>
+
+<p>Once these parameters are defined, calling the method <code>SearchResults()</code> will 
+provide a list of individuals in the ontology topic which contain the search term.</p>
+
+<p><img src="../files/img/search.png" alt="" /></p>
+
+<p>Using a more specific ontology subtopic (e.g. replacing <code>"Place"</code> with <code>"City"</code> above) may help to
+narrow down the possibilities and provide more relevant search results for your query.</p>
+
+<h3>Units of Measure</h3>
+
+<p>Units of measure are supported. For example, the <code>averageSpeed</code> property of Saturn 
+is provided in kilometres per second. For any SI units, the F# core library 
+<code>UnitSystems.SI</code> units are used. Otherwise units from <code>DbPediaMeasures</code> is used. Units of
+measure information is only available at compile time, so the types of these values
+will simply be <code>float</code> at runtime.</p>
+
+<p>Here is an example from data about the planet Saturn:</p>
+
+<table class="pre"><tr><td class="lines"><pre class="fssnip">
+<span class="l">1: </span>
+<span class="l">2: </span>
+<span class="l">3: </span>
+<span class="l">4: </span>
+</pre>
+</td>
+<td class="snippet"><pre class="fssnip">
+<span class="k">let</span> <span onmouseout="hideTip(event, 'fs12', 21)" onmouseover="showTip(event, 'fs12', 21)" class="i">saturn</span> <span class="o">=</span> <span onmouseout="hideTip(event, 'fs3', 22)" onmouseover="showTip(event, 'fs3', 22)" class="i">data</span><span class="o">.</span><span onmouseout="hideTip(event, 'fs7', 23)" onmouseover="showTip(event, 'fs7', 23)" class="i">Ontology</span><span class="o">.</span><span class="i">CelestialBody</span><span class="o">.</span><span class="i">Planet</span><span class="o">.</span><span class="i">IndividualsAZ</span><span class="o">.</span><span class="i">S</span><span class="o">.</span><span class="i">Saturn</span>
+<span class="k">let</span> <span onmouseout="hideTip(event, 'fs13', 24)" onmouseover="showTip(event, 'fs13', 24)" class="i">avgSpeed</span> <span class="o">=</span> <span onmouseout="hideTip(event, 'fs12', 25)" onmouseover="showTip(event, 'fs12', 25)" class="i">saturn</span><span class="o">.</span><span class="i">averageSpeed</span>      <span class="c">// mouse-over &#39;avgSpeed&#39; to see its type</span>
+<span class="k">let</span> <span onmouseout="hideTip(event, 'fs14', 26)" onmouseover="showTip(event, 'fs14', 26)" class="i">density</span> <span class="o">=</span> <span onmouseout="hideTip(event, 'fs12', 27)" onmouseover="showTip(event, 'fs12', 27)" class="i">saturn</span><span class="o">.</span><span onmouseout="hideTip(event, 'fs14', 28)" onmouseover="showTip(event, 'fs14', 28)" class="i">density</span>
+<span class="k">let</span> <span onmouseout="hideTip(event, 'fs15', 29)" onmouseover="showTip(event, 'fs15', 29)" class="i">minDistanceFromSun</span> <span class="o">=</span> <span onmouseout="hideTip(event, 'fs12', 30)" onmouseover="showTip(event, 'fs12', 30)" class="i">saturn</span><span class="o">.</span><span class="i">minimumDistanceFromSun</span></pre>
+</td>
+</tr>
+</table>
+
+<div class="tip" id="fs1">namespace FSharp</div>
+<div class="tip" id="fs2">namespace FSharp.Data</div>
+<div class="tip" id="fs3">val data : DbPedia.ServiceTypes.DbPediaDataContext<br /><br />Full name: Index.data</div>
+<div class="tip" id="fs4">type DbPedia =<br />&#160;&#160;static member GetDataContext : unit -&gt; DbPediaDataContext<br />&#160;&#160;nested type ServiceTypes<br /><br />Full name: FSharp.Data.DbPedia</div>
+<div class="tip" id="fs5">DbPedia.GetDataContext() : DbPedia.ServiceTypes.DbPediaDataContext</div>
+<div class="tip" id="fs6">val scientists : DbPedia.ServiceTypes.ScientistIndividualsType<br /><br />Full name: Index.scientists</div>
+<div class="tip" id="fs7">property DbPedia.ServiceTypes.DbPediaDataContext.Ontology: DbPedia.ServiceTypes.OntologyType<br /><em><br /><br />The DBpedia Ontology is a shallow, cross-domain ontology, which has been manually created based on the most commonly used infoboxes within Wikipedia. The ontology currently covers 529 classes which form a subsumption hierarchy and are described by 2,333 different properties.</em></div>
+<div class="tip" id="fs8">property DbPedia.ServiceTypes.OntologyType.Agent: DbPedia.ServiceTypes.AgentOntologyType</div>
+<div class="tip" id="fs9">property DbPedia.ServiceTypes.AgentOntologyType.Person: DbPedia.ServiceTypes.PersonOntologyType</div>
+<div class="tip" id="fs10">property DbPedia.ServiceTypes.PersonOntologyType.Scientist: DbPedia.ServiceTypes.ScientistOntologyType</div>
+<div class="tip" id="fs11">property DbPedia.ServiceTypes.ScientistOntologyType.Individuals: DbPedia.ServiceTypes.ScientistIndividualsType</div>
+<div class="tip" id="fs12">val saturn : obj<br /><br />Full name: Index.saturn</div>
+<div class="tip" id="fs13">val avgSpeed : obj<br /><br />Full name: Index.avgSpeed</div>
+<div class="tip" id="fs14">val density : obj<br /><br />Full name: Index.density</div>
+<div class="tip" id="fs15">val minDistanceFromSun : obj<br /><br />Full name: Index.minDistanceFromSun</div>
+
+        </div>
+        <div class="span3">
+          <img src="./img/logo.png" alt="F# Project" style="width:150px;margin:10px" />  
+          <ul class="nav nav-list" id="menu" style="margin-top: 20px;">
+            <li class="nav-header">FSharp.Data.DbPedia</li>
+            <li><a href="./index.html">Home page</a></li>
+            <li class="divider"></li>
+            <li><a href="http://nuget.com/packages/FSharp.Data.DbPedia">Get Library via NuGet</a></li>
+            <li><a href="https://github.com/fsprojects/FSharp.Data.DbPedia">Source Code on GitHub</a></li>
+            <li><a href="https://github.com/fsprojects/FSharp.Data.DbPedia/blob/master/LICENSE.txt">License</a></li>
+            <li><a href="https://github.com/fsprojects/FSharp.Data.DbPedia/blob/master/RELEASE_NOTES.md">Release Notes</a></li>
+            
+            <li class="nav-header">Getting started</li>
+            <li><a href="./tutorial.html">Sample tutorial</a></li>
+
+            <li class="nav-header">Documentation</li>
+            <li><a href="./reference/index.html">API Reference</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <a href="https://github.com/fsprojects/FSharp.Data.DbPedia"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_right_gray_6d6d6d.png" alt="Fork me on GitHub"/></a>
+  </body>
+  </html>
