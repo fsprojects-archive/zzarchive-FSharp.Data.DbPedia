@@ -8,6 +8,11 @@ See http://fsprojects.github.io/FSharp.Data.DbPedia/
 
 See the [Developer Guide](DEVGUIDE.md) for information on building, testing and contributing to the project.
 
+# Build Status
+
+Head (branch ``master``), Windows Server 2012 (Appveyor)  [![Build status](https://ci.appveyor.com/api/projects/status/y6d9vcdeov9rqcgd/branch/master)](https://ci.appveyor.com/project/fsgit/fsharp-data-dbpedia)
+
+
 # Notes
 
 * DbPedia often goes down for maintenance.  You won't be able to use the type provider, build tests or make a release while it's down.
