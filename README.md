@@ -19,3 +19,4 @@ Head (branch ``master``), Windows Server 2012 (Appveyor)  [![Build status](https
 
 * You can test whether [the DbPedia SPARQL JSON end point](http://dbpedia.org/sparql) is up
   by [running a sample query](http://dbpedia.org/sparql?default-graph-uri=http%3A%2F%2Fdbpedia.org&query=select+distinct+%3FConcept+where+%7B%5B%5D+a+%3FConcept%7D+LIMIT+100&format=application%2Fsparql-results%2Bjson&timeout=30000&debug=on)
+
