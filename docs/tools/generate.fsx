@@ -8,7 +8,7 @@ let referenceBinaries = [ "FSharp.Data.DbPedia.dll" ]
 // Web site location for the generated documentation
 let website = "."
 
-let githubLink = "http://github.com/aastevenson/dbpedia-tp"
+let githubLink = "https://github.com/fsprojects/FSharp.Data.DbPedia"
 
 // Specify more information about your project
 let info =

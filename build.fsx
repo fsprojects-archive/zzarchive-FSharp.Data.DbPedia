@@ -38,14 +38,15 @@ let tags = "F# fsharp typeprovider dbpedia"
 // File system information 
 // (<solutionFile>.sln is built during the building process)
 let solutionFile  = "FSharp.Data.DbPedia"
+let testSolutionFile  = "tests/FSharp.Data.DbPedia.Tests/FSharp.Data.DbPedia.Tests"
 // Pattern specifying assemblies to be tested using NUnit
-let testAssemblies = "tests/**/bin/Release/*Tests*.dll"
+let testAssemblies = "bin/*Tests*.dll"
 
 // Git configuration (used for publishing documentation in gh-pages branch)
 // The profile where the project is posted 
-let gitHome = "https://github.com/aastevenson"
+let gitHome = "https://github.com/fsprojects"
 // The name of the project on GitHub
-let gitName = "dbpedia-tp"
+let gitName = "FSharp.Data.DbPedia"
 
 // --------------------------------------------------------------------------------------
 // END TODO: The rest of the file includes standard build steps 
@@ -84,6 +85,12 @@ Target "CleanDocs" (fun _ ->
 
 Target "Build" (fun _ ->
     !! (solutionFile + "*.sln")
+    |> MSBuildRelease "" "Rebuild"
+    |> ignore
+)
+
+Target "BuildTests" (fun _ ->
+    !! (testSolutionFile + "*.sln")
     |> MSBuildRelease "" "Rebuild"
     |> ignore
 )
@@ -156,6 +163,7 @@ Target "All" DoNothing
 
 
 "Build"
+  ==> "BuildTests"
   ==> "RunTests"
   ==> "All" 
 
@@ -164,7 +172,7 @@ Target "All" DoNothing
   ==> "GenerateDocs"
   ==> "ReleaseDocs"
 
-"Build" 
+"All" 
   ==> "NuGet"
   ==> "Release"
 
