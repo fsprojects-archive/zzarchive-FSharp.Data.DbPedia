@@ -16,7 +16,7 @@ let info =
     "project-author", "Andrew Stevenson"
     "project-summary", "An F# type provider for DBpedia"
     "project-github", githubLink
-    "project-nuget", "http://nuget.com/packages/FSharp.Data.DbPedia" ]
+    "project-nuget", "https://www.nuget.org/packages/FSharp.Data.DbPedia" ]
 
 // --------------------------------------------------------------------------------------
 // For typical project, no changes are needed below
