@@ -13,8 +13,8 @@
     <script src="https://netdna.bootstrapcdn.com/twitter-bootstrap/2.2.1/js/bootstrap.min.js"></script>
     <link href="https://netdna.bootstrapcdn.com/twitter-bootstrap/2.2.1/css/bootstrap-combined.min.css" rel="stylesheet"/>
 
-    <link type="text/css" rel="stylesheet" href="./content/style.css" />
-    <script type="text/javascript" src="./content/tips.js"></script>
+    <link type="text/css" rel="stylesheet" href="/FSharp.Data.DbPedia/content/style.css" />
+    <script type="text/javascript" src="/FSharp.Data.DbPedia/content/tips.js"></script>
     <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
     <!--[if lt IE 9]>
       <script src="https://html5shim.googlecode.com/svn/trunk/html5.js"></script>
@@ -27,7 +27,7 @@
           <li><a href="http://fsharp.org">fsharp.org</a></li>
           <li><a href="https://github.com/fsprojects/FSharp.Data.DbPedia">github page</a></li>
         </ul>
-        <h3 class="muted"><a href="./index.html">FSharp.Data.DbPedia</a></h3>
+        <h3 class="muted"><a href="/FSharp.Data.DbPedia/index.html">FSharp.Data.DbPedia</a></h3>
       </div>
       <hr />
       <div class="row">
@@ -57,7 +57,7 @@ initializes a connection to DBpedia using the <code>GetDataContext</code> method
 </pre>
 </td>
 <td class="snippet"><pre class="fssnip">
-<span class="prep">#r</span> <span class="s">&quot;</span><span class="s">.</span><span class="s">.</span><span class="s">/</span><span class="s">.</span><span class="s">.</span><span class="s">/</span><span class="s">bin</span><span class="s">/</span><span class="s">FSharp</span><span class="s">.</span><span class="s">Data</span><span class="s">.</span><span class="s">DbPedia</span><span class="s">.</span><span class="s">dll</span><span class="s">&quot;</span>
+<span class="prep">#r</span> <span class="s">&quot;</span><span class="s">FSharp</span><span class="s">.</span><span class="s">Data</span><span class="s">.</span><span class="s">DbPedia</span><span class="s">.</span><span class="s">dll</span><span class="s">&quot;</span>
 <span class="k">open</span> <span onmouseout="hideTip(event, 'fs1', 1)" onmouseover="showTip(event, 'fs1', 1)" class="i">FSharp</span><span class="o">.</span><span onmouseout="hideTip(event, 'fs2', 2)" onmouseover="showTip(event, 'fs2', 2)" class="i">Data</span>
 
 <span class="k">let</span> <span onmouseout="hideTip(event, 'fs3', 3)" onmouseover="showTip(event, 'fs3', 3)" class="i">data</span> <span class="o">=</span> <span onmouseout="hideTip(event, 'fs4', 4)" onmouseover="showTip(event, 'fs4', 4)" class="i">DbPedia</span><span class="o">.</span><span onmouseout="hideTip(event, 'fs5', 5)" onmouseover="showTip(event, 'fs5', 5)" class="i">GetDataContext</span>()</pre>
@@ -94,7 +94,7 @@ links (e.g. to a <a href="http://freebase.com">Freebase</a> entity), but often t
 entities. The DBpedia type provider automatically recognizes these links and provides a helpful
 <code>(dbpedia ref)</code> annotation to such properties.</p>
 
-<p><img src="../files/img/dbpediaref.png" alt="" /></p>
+<p><img src="/FSharp.Data.DbPedia/img/dbpediaref.png" alt="" /></p>
 
 <p>These properties can be expanded to reveal further structure and properties.</p>
 
@@ -142,7 +142,7 @@ the maximum limit retrieved at a time (default 2000) causing your desired indivi
 <p>Once these parameters are defined, calling the method <code>SearchResults()</code> will 
 provide a list of individuals in the ontology topic which contain the search term.</p>
 
-<p><img src="../files/img/search.png" alt="" /></p>
+<p><img src="/FSharp.Data.DbPedia/img/search.png" alt="" /></p>
 
 <p>Using a more specific ontology subtopic (e.g. replacing <code>"Place"</code> with <code>"City"</code> above) may help to
 narrow down the possibilities and provide more relevant search results for your query.</p>
@@ -191,21 +191,21 @@ will simply be <code>float</code> at runtime.</p>
 
         </div>
         <div class="span3">
-          <img src="./img/logo.png" alt="F# Project" style="width:150px;margin:10px" />  
+          <img src="/FSharp.Data.DbPedia/img/logo.png" alt="F# Project" style="width:150px;margin:10px" />  
           <ul class="nav nav-list" id="menu" style="margin-top: 20px;">
             <li class="nav-header">FSharp.Data.DbPedia</li>
-            <li><a href="./index.html">Home page</a></li>
+            <li><a href="/FSharp.Data.DbPedia/index.html">Home page</a></li>
             <li class="divider"></li>
-            <li><a href="http://nuget.com/packages/FSharp.Data.DbPedia">Get Library via NuGet</a></li>
+            <li><a href="https://www.nuget.org/packages/FSharp.Data.DbPedia">Get Library via NuGet</a></li>
             <li><a href="https://github.com/fsprojects/FSharp.Data.DbPedia">Source Code on GitHub</a></li>
             <li><a href="https://github.com/fsprojects/FSharp.Data.DbPedia/blob/master/LICENSE.txt">License</a></li>
             <li><a href="https://github.com/fsprojects/FSharp.Data.DbPedia/blob/master/RELEASE_NOTES.md">Release Notes</a></li>
             
             <li class="nav-header">Getting started</li>
-            <li><a href="./tutorial.html">Sample tutorial</a></li>
+            <li><a href="/FSharp.Data.DbPedia/tutorial.html">Sample tutorial</a></li>
 
             <li class="nav-header">Documentation</li>
-            <li><a href="./reference/index.html">API Reference</a></li>
+            <li><a href="/FSharp.Data.DbPedia/reference/index.html">API Reference</a></li>
           </ul>
         </div>
       </div>

@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8"/>
+    <title>Helpers - FSharp.Data.DbPedia</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <meta name="description" content=""/>
+    <meta name="author" content="Andrew Stevenson"/>
+
+    <script src="https://code.jquery.com/jquery-1.8.0.js"></script>
+    <script src="https://code.jquery.com/ui/1.8.23/jquery-ui.js"></script>
+    <script src="https://netdna.bootstrapcdn.com/twitter-bootstrap/2.2.1/js/bootstrap.min.js"></script>
+    <link href="https://netdna.bootstrapcdn.com/twitter-bootstrap/2.2.1/css/bootstrap-combined.min.css" rel="stylesheet"/>
+
+    <link type="text/css" rel="stylesheet" href="/FSharp.Data.DbPedia/content/style.css" />
+    <script type="text/javascript" src="/FSharp.Data.DbPedia/content/tips.js"></script>
+    <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
+    <!--[if lt IE 9]>
+      <script src="https://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+    <div class="container">
+      <div class="masthead">
+        <ul class="nav nav-pills pull-right">
+          <li><a href="http://fsharp.org">fsharp.org</a></li>
+          <li><a href="https://github.com/fsprojects/FSharp.Data.DbPedia">github page</a></li>
+        </ul>
+        <h3 class="muted"><a href="/FSharp.Data.DbPedia/index.html">FSharp.Data.DbPedia</a></h3>
+      </div>
+      <hr />
+      <div class="row">
+        <div class="span9" id="main">
+          
+
+
+
+<h1>Helpers</h1>
+<div class="xmldoc">
+</div>
+
+<!-- Render nested types and modules, if there are any -->
+  <h2>Nested types and modules</h2>
+  <div>
+      <table class="table table-bordered type-list">
+    <thead>
+      <tr><td>Type</td><td>Description</td></tr>
+    </thead>
+    <tbody>
+        <tr>
+          <td class="type-name">
+            <a href="dbpediaquery-helpers-dbpediaquery.html">DbPediaQuery</a>
+          </td>
+          <td class="xmldoc"></td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="dbpediaquery-helpers-triple.html">Triple</a>
+          </td>
+          <td class="xmldoc"></td>
+        </tr>
+    </tbody>
+  </table>
+
+  </div>
+
+  <h3>Functions and values</h3>
+  <table class="table table-bordered member-list">
+    <thead>
+      <tr><td>Function or value</td><td>Description</td></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '16', 16)" onmouseover="showTip(event, '16', 16)">
+            tryFindInTree p root
+          </code>
+          <div class="tip" id="16">
+            <strong>Signature:</strong> p:(Expression -&gt; bool) -&gt; root:Expression -&gt; Expression option<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+        
+            <a href="https://github.com/fsprojects/FSharp.Data.DbPedia/tree/master/src/FSharp.Data.DbPedia/DbPediaQuery.fs#L106-106" class="github-link">Go to GitHub source</a>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  <h3>Active patterns</h3>
+  <table class="table table-bordered member-list">
+    <thead>
+      <tr><td>Active pattern</td><td>Description</td></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '17', 17)" onmouseover="showTip(event, '17', 17)">
+            ( |AsType|_| ) e
+          </code>
+          <div class="tip" id="17">
+            <strong>Signature:</strong> e:Expression -&gt; (Expression * Type) option<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+        
+            <a href="https://github.com/fsprojects/FSharp.Data.DbPedia/tree/master/src/FSharp.Data.DbPedia/DbPediaQuery.fs#L46-46" class="github-link">Go to GitHub source</a>
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '18', 18)" onmouseover="showTip(event, '18', 18)">
+            ( |Constant|_| ) e
+          </code>
+          <div class="tip" id="18">
+            <strong>Signature:</strong> e:Expression -&gt; (obj * Type) option<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+        
+            <a href="https://github.com/fsprojects/FSharp.Data.DbPedia/tree/master/src/FSharp.Data.DbPedia/DbPediaQuery.fs#L65-65" class="github-link">Go to GitHub source</a>
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '19', 19)" onmouseover="showTip(event, '19', 19)">
+            ( |Convert|_| ) e
+          </code>
+          <div class="tip" id="19">
+            <strong>Signature:</strong> e:Expression -&gt; (Expression * Type) option<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+        
+            <a href="https://github.com/fsprojects/FSharp.Data.DbPedia/tree/master/src/FSharp.Data.DbPedia/DbPediaQuery.fs#L76-76" class="github-link">Go to GitHub source</a>
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '20', 20)" onmouseover="showTip(event, '20', 20)">
+            ( |Decimal|_| ) _arg1
+          </code>
+          <div class="tip" id="20">
+            <strong>Signature:</strong> _arg1:Expression -&gt; decimal option<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+        
+            <a href="https://github.com/fsprojects/FSharp.Data.DbPedia/tree/master/src/FSharp.Data.DbPedia/DbPediaQuery.fs#L74-74" class="github-link">Go to GitHub source</a>
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '21', 21)" onmouseover="showTip(event, '21', 21)">
+            ( |Double|_| ) _arg1
+          </code>
+          <div class="tip" id="21">
+            <strong>Signature:</strong> _arg1:Expression -&gt; double option<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+        
+            <a href="https://github.com/fsprojects/FSharp.Data.DbPedia/tree/master/src/FSharp.Data.DbPedia/DbPediaQuery.fs#L73-73" class="github-link">Go to GitHub source</a>
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '22', 22)" onmouseover="showTip(event, '22', 22)">
+            ( |Int32|_| ) _arg1
+          </code>
+          <div class="tip" id="22">
+            <strong>Signature:</strong> _arg1:Expression -&gt; int option<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+        
+            <a href="https://github.com/fsprojects/FSharp.Data.DbPedia/tree/master/src/FSharp.Data.DbPedia/DbPediaQuery.fs#L71-71" class="github-link">Go to GitHub source</a>
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '23', 23)" onmouseover="showTip(event, '23', 23)">
+            ( |Lambda|_| ) e
+          </code>
+          <div class="tip" id="23">
+            <strong>Signature:</strong> e:Expression -&gt; (ParameterExpression list * Expression) option<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+        
+            <a href="https://github.com/fsprojects/FSharp.Data.DbPedia/tree/master/src/FSharp.Data.DbPedia/DbPediaQuery.fs#L86-86" class="github-link">Go to GitHub source</a>
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '24', 24)" onmouseover="showTip(event, '24', 24)">
+            ( |LetExpr|_| ) e
+          </code>
+          <div class="tip" id="24">
+            <strong>Signature:</strong> e:Expression -&gt; (ParameterExpression * Expression * Expression) option<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+        
+            <a href="https://github.com/fsprojects/FSharp.Data.DbPedia/tree/master/src/FSharp.Data.DbPedia/DbPediaQuery.fs#L91-91" class="github-link">Go to GitHub source</a>
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '25', 25)" onmouseover="showTip(event, '25', 25)">
+            ( |MethodCall|_| ) e
+          </code>
+          <div class="tip" id="25">
+            <strong>Signature:</strong> e:Expression -&gt; (Expression option * MethodInfo * Expression list) option<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+        
+            <a href="https://github.com/fsprojects/FSharp.Data.DbPedia/tree/master/src/FSharp.Data.DbPedia/DbPediaQuery.fs#L40-40" class="github-link">Go to GitHub source</a>
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '26', 26)" onmouseover="showTip(event, '26', 26)">
+            ( |MethodWithName|_| ) s m
+          </code>
+          <div class="tip" id="26">
+            <strong>Signature:</strong> s:string -&gt; m:MethodInfo -&gt; unit option<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+        
+            <a href="https://github.com/fsprojects/FSharp.Data.DbPedia/tree/master/src/FSharp.Data.DbPedia/DbPediaQuery.fs#L37-37" class="github-link">Go to GitHub source</a>
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '27', 27)" onmouseover="showTip(event, '27', 27)">
+            ( |NewArray|_| ) e
+          </code>
+          <div class="tip" id="27">
+            <strong>Signature:</strong> e:Expression -&gt; Expression list option<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+        
+            <a href="https://github.com/fsprojects/FSharp.Data.DbPedia/tree/master/src/FSharp.Data.DbPedia/DbPediaQuery.fs#L51-51" class="github-link">Go to GitHub source</a>
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '28', 28)" onmouseover="showTip(event, '28', 28)">
+            ( |Null|_| ) _arg1
+          </code>
+          <div class="tip" id="28">
+            <strong>Signature:</strong> _arg1:Expression -&gt; unit option<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+        
+            <a href="https://github.com/fsprojects/FSharp.Data.DbPedia/tree/master/src/FSharp.Data.DbPedia/DbPediaQuery.fs#L72-72" class="github-link">Go to GitHub source</a>
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '29', 29)" onmouseover="showTip(event, '29', 29)">
+            ( |PropertyGet|_| ) e
+          </code>
+          <div class="tip" id="29">
+            <strong>Signature:</strong> e:Expression -&gt; (Expression option * PropertyInfo) option<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+        
+            <a href="https://github.com/fsprojects/FSharp.Data.DbPedia/tree/master/src/FSharp.Data.DbPedia/DbPediaQuery.fs#L56-56" class="github-link">Go to GitHub source</a>
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '30', 30)" onmouseover="showTip(event, '30', 30)">
+            ( |PropertyWithName|_| ) s m
+          </code>
+          <div class="tip" id="30">
+            <strong>Signature:</strong> s:string -&gt; m:PropertyInfo -&gt; unit option<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+        
+            <a href="https://github.com/fsprojects/FSharp.Data.DbPedia/tree/master/src/FSharp.Data.DbPedia/DbPediaQuery.fs#L38-38" class="github-link">Go to GitHub source</a>
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '31', 31)" onmouseover="showTip(event, '31', 31)">
+            ( |Quote|_| ) e
+          </code>
+          <div class="tip" id="31">
+            <strong>Signature:</strong> e:Expression -&gt; Expression option<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+        
+            <a href="https://github.com/fsprojects/FSharp.Data.DbPedia/tree/master/src/FSharp.Data.DbPedia/DbPediaQuery.fs#L96-96" class="github-link">Go to GitHub source</a>
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '32', 32)" onmouseover="showTip(event, '32', 32)">
+            ( |Select|_| ) e
+          </code>
+          <div class="tip" id="32">
+            <strong>Signature:</strong> e:Expression -&gt; (Expression * Expression) option<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+        
+            <a href="https://github.com/fsprojects/FSharp.Data.DbPedia/tree/master/src/FSharp.Data.DbPedia/DbPediaQuery.fs#L101-101" class="github-link">Go to GitHub source</a>
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '33', 33)" onmouseover="showTip(event, '33', 33)">
+            ( |String|_| ) _arg1
+          </code>
+          <div class="tip" id="33">
+            <strong>Signature:</strong> _arg1:Expression -&gt; string option<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+        
+            <a href="https://github.com/fsprojects/FSharp.Data.DbPedia/tree/master/src/FSharp.Data.DbPedia/DbPediaQuery.fs#L70-70" class="github-link">Go to GitHub source</a>
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '34', 34)" onmouseover="showTip(event, '34', 34)">
+            ( |Var|_| ) e
+          </code>
+          <div class="tip" id="34">
+            <strong>Signature:</strong> e:Expression -&gt; ParameterExpression option<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+        
+            <a href="https://github.com/fsprojects/FSharp.Data.DbPedia/tree/master/src/FSharp.Data.DbPedia/DbPediaQuery.fs#L81-81" class="github-link">Go to GitHub source</a>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+        </div>
+        <div class="span3">
+          <img src="/FSharp.Data.DbPedia/img/logo.png" alt="F# Project" style="width:150px;margin:10px" />  
+          <ul class="nav nav-list" id="menu" style="margin-top: 20px;">
+            <li class="nav-header">FSharp.Data.DbPedia</li>
+            <li><a href="/FSharp.Data.DbPedia/index.html">Home page</a></li>
+            <li class="divider"></li>
+            <li><a href="https://www.nuget.org/packages/FSharp.Data.DbPedia">Get Library via NuGet</a></li>
+            <li><a href="https://github.com/fsprojects/FSharp.Data.DbPedia">Source Code on GitHub</a></li>
+            <li><a href="https://github.com/fsprojects/FSharp.Data.DbPedia/blob/master/LICENSE.txt">License</a></li>
+            <li><a href="https://github.com/fsprojects/FSharp.Data.DbPedia/blob/master/RELEASE_NOTES.md">Release Notes</a></li>
+            
+            <li class="nav-header">Getting started</li>
+            <li><a href="/FSharp.Data.DbPedia/tutorial.html">Sample tutorial</a></li>
+
+            <li class="nav-header">Documentation</li>
+            <li><a href="/FSharp.Data.DbPedia/reference/index.html">API Reference</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <a href="https://github.com/fsprojects/FSharp.Data.DbPedia"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_right_gray_6d6d6d.png" alt="Fork me on GitHub"/></a>
+  </body>
+  </html>

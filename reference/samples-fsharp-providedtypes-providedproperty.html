@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8"/>
+    <title>ProvidedProperty - FSharp.Data.DbPedia</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <meta name="description" content=""/>
+    <meta name="author" content="Andrew Stevenson"/>
+
+    <script src="https://code.jquery.com/jquery-1.8.0.js"></script>
+    <script src="https://code.jquery.com/ui/1.8.23/jquery-ui.js"></script>
+    <script src="https://netdna.bootstrapcdn.com/twitter-bootstrap/2.2.1/js/bootstrap.min.js"></script>
+    <link href="https://netdna.bootstrapcdn.com/twitter-bootstrap/2.2.1/css/bootstrap-combined.min.css" rel="stylesheet"/>
+
+    <link type="text/css" rel="stylesheet" href="/FSharp.Data.DbPedia/content/style.css" />
+    <script type="text/javascript" src="/FSharp.Data.DbPedia/content/tips.js"></script>
+    <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
+    <!--[if lt IE 9]>
+      <script src="https://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+    <div class="container">
+      <div class="masthead">
+        <ul class="nav nav-pills pull-right">
+          <li><a href="http://fsharp.org">fsharp.org</a></li>
+          <li><a href="https://github.com/fsprojects/FSharp.Data.DbPedia">github page</a></li>
+        </ul>
+        <h3 class="muted"><a href="/FSharp.Data.DbPedia/index.html">FSharp.Data.DbPedia</a></h3>
+      </div>
+      <hr />
+      <div class="row">
+        <div class="span9" id="main">
+          
+
+
+
+<h1>ProvidedProperty</h1>
+<div class="xmldoc">
+<p>Represents an erased provided property.</p>
+</div>
+  <h3>Constructors</h3>
+  <table class="table table-bordered member-list">
+    <thead>
+      <tr><td>Constructor</td><td>Description</td></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '41', 41)" onmouseover="showTip(event, '41', 41)">
+            new(...)
+          </code>
+          <div class="tip" id="41">
+            <strong>Signature:</strong> (propertyName:string * propertyType:Type * parameters:ProvidedParameter list option) -&gt; ProvidedProperty<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+        <p>Create a new provided type. It is not initially associated with any specific provided type definition.</p>
+
+            <a href="https://github.com/fsprojects/FSharp.Data.DbPedia/tree/master/src/FSharp.Data.DbPedia/ProvidedTypes-0.3.fs#L418-418" class="github-link">Go to GitHub source</a>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  <h3>Instance members</h3>
+  <table class="table table-bordered member-list">
+    <thead>
+      <tr><td>Instance member</td><td>Description</td></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '56', 56)" onmouseover="showTip(event, '56', 56)">
+            AddDefinitionLocation(...)
+          </code>
+          <div class="tip" id="56">
+            <strong>Signature:</strong> (line:int * column:int * filePath:string) -&gt; unit<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+        <p>Add definition location information to the provided type definition.</p>
+
+            <a href="https://github.com/fsprojects/FSharp.Data.DbPedia/tree/master/src/FSharp.Data.DbPedia/ProvidedTypes-0.3.fs#L441-441" class="github-link">Go to GitHub source</a>
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '57', 57)" onmouseover="showTip(event, '57', 57)">
+            AddObsoleteAttribute(message)
+          </code>
+          <div class="tip" id="57">
+            <strong>Signature:</strong> message:string -&gt; unit<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+        <p>Add a 'System.Obsolete' attribute to this provided property</p>
+
+            <a href="https://github.com/fsprojects/FSharp.Data.DbPedia/tree/master/src/FSharp.Data.DbPedia/ProvidedTypes-0.3.fs#L440-440" class="github-link">Go to GitHub source</a>
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '58', 58)" onmouseover="showTip(event, '58', 58)">
+            AddXmlDoc(xmlDoc)
+          </code>
+          <div class="tip" id="58">
+            <strong>Signature:</strong> xmlDoc:string -&gt; unit<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+        <p>Add XML documentation information to this provided constructor</p>
+
+            <a href="https://github.com/fsprojects/FSharp.Data.DbPedia/tree/master/src/FSharp.Data.DbPedia/ProvidedTypes-0.3.fs#L439-439" class="github-link">Go to GitHub source</a>
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '59', 59)" onmouseover="showTip(event, '59', 59)">
+            AddXmlDocComputed(xmlDocFunction)
+          </code>
+          <div class="tip" id="59">
+            <strong>Signature:</strong> (xmlDocFunction:(unit -&gt; string)) -&gt; unit<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+        <p>Add XML documentation information to this provided constructor, where the computation of the documentation is delayed until necessary
+The documentation is re-computed  every time it is required.</p>
+
+            <a href="https://github.com/fsprojects/FSharp.Data.DbPedia/tree/master/src/FSharp.Data.DbPedia/ProvidedTypes-0.3.fs#L437-437" class="github-link">Go to GitHub source</a>
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '60', 60)" onmouseover="showTip(event, '60', 60)">
+            AddXmlDocDelayed(xmlDocFunction)
+          </code>
+          <div class="tip" id="60">
+            <strong>Signature:</strong> (xmlDocFunction:(unit -&gt; string)) -&gt; unit<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+        <p>Add XML documentation information to this provided constructor, where the computation of the documentation is delayed until necessary</p>
+
+            <a href="https://github.com/fsprojects/FSharp.Data.DbPedia/tree/master/src/FSharp.Data.DbPedia/ProvidedTypes-0.3.fs#L438-438" class="github-link">Go to GitHub source</a>
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '61', 61)" onmouseover="showTip(event, '61', 61)">
+            GetterCode()
+          </code>
+          <div class="tip" id="61">
+            <strong>Signature:</strong> unit -&gt; Expr list -&gt; Expr<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+        <p>Set the quotation used to compute the implementation of gets of this property.</p>
+
+            <a href="https://github.com/fsprojects/FSharp.Data.DbPedia/tree/master/src/FSharp.Data.DbPedia/ProvidedTypes-0.3.fs#L454-454" class="github-link">Go to GitHub source</a>
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '62', 62)" onmouseover="showTip(event, '62', 62)">
+            IsStatic()
+          </code>
+          <div class="tip" id="62">
+            <strong>Signature:</strong> unit -&gt; bool<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+        <p>Get or set a flag indicating if the property is static.</p>
+
+            <a href="https://github.com/fsprojects/FSharp.Data.DbPedia/tree/master/src/FSharp.Data.DbPedia/ProvidedTypes-0.3.fs#L451-451" class="github-link">Go to GitHub source</a>
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '63', 63)" onmouseover="showTip(event, '63', 63)">
+            SetterCode()
+          </code>
+          <div class="tip" id="63">
+            <strong>Signature:</strong> unit -&gt; Expr list -&gt; Expr<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+        <p>Set the function used to compute the implementation of sets of this property.</p>
+
+            <a href="https://github.com/fsprojects/FSharp.Data.DbPedia/tree/master/src/FSharp.Data.DbPedia/ProvidedTypes-0.3.fs#L458-458" class="github-link">Go to GitHub source</a>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+        </div>
+        <div class="span3">
+          <img src="/FSharp.Data.DbPedia/img/logo.png" alt="F# Project" style="width:150px;margin:10px" />  
+          <ul class="nav nav-list" id="menu" style="margin-top: 20px;">
+            <li class="nav-header">FSharp.Data.DbPedia</li>
+            <li><a href="/FSharp.Data.DbPedia/index.html">Home page</a></li>
+            <li class="divider"></li>
+            <li><a href="https://www.nuget.org/packages/FSharp.Data.DbPedia">Get Library via NuGet</a></li>
+            <li><a href="https://github.com/fsprojects/FSharp.Data.DbPedia">Source Code on GitHub</a></li>
+            <li><a href="https://github.com/fsprojects/FSharp.Data.DbPedia/blob/master/LICENSE.txt">License</a></li>
+            <li><a href="https://github.com/fsprojects/FSharp.Data.DbPedia/blob/master/RELEASE_NOTES.md">Release Notes</a></li>
+            
+            <li class="nav-header">Getting started</li>
+            <li><a href="/FSharp.Data.DbPedia/tutorial.html">Sample tutorial</a></li>
+
+            <li class="nav-header">Documentation</li>
+            <li><a href="/FSharp.Data.DbPedia/reference/index.html">API Reference</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <a href="https://github.com/fsprojects/FSharp.Data.DbPedia"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_right_gray_6d6d6d.png" alt="Fork me on GitHub"/></a>
+  </body>
+  </html>
