@@ -6,7 +6,7 @@
 // Binaries that have XML documentation (in a corresponding generated XML file)
 let referenceBinaries = [ "FSharp.Data.DbPedia.dll" ]
 // Web site location for the generated documentation
-let website = "."
+let website = "/FSharp.Data.DbPedia"
 
 let githubLink = "https://github.com/fsprojects/FSharp.Data.DbPedia"
 
@@ -72,7 +72,7 @@ let buildReference () =
   for lib in referenceBinaries do
     MetadataFormat.Generate
       ( bin @@ lib, output @@ "reference", layoutRoots, 
-        parameters = ("root", root)::info,
+        parameters = ("root", root)::info, libDirs = [bin],
         sourceRepo = githubLink @@ "tree/master",
         sourceFolder = __SOURCE_DIRECTORY__ @@ ".." @@ "..",
         publicOnly = true )

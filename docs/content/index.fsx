@@ -23,7 +23,7 @@ The following example loads the `FSharp.Data.DbPedia.dll` library (in F# Interac
 initializes a connection to DBpedia using the `GetDataContext` method:
 *)
 
-#r "../../bin/FSharp.Data.DbPedia.dll"
+#r "FSharp.Data.DbPedia.dll"
 open FSharp.Data
 
 let data = DbPedia.GetDataContext()
@@ -52,7 +52,7 @@ links (e.g. to a [Freebase](http://freebase.com) entity), but often they are lin
 entities. The DBpedia type provider automatically recognizes these links and provides a helpful
 `(dbpedia ref)` annotation to such properties.
 
-![](../files/img/dbpediaref.png)
+![](/FSharp.Data.DbPedia/img/dbpediaref.png)
 
 These properties can be expanded to reveal further structure and properties.
 *)
@@ -86,7 +86,7 @@ The third option is to use a special pair of static parameters to specify:
 Once these parameters are defined, calling the method `SearchResults()` will 
 provide a list of individuals in the ontology topic which contain the search term.
 
-![](../files/img/search.png)
+![](/FSharp.Data.DbPedia/img/search.png)
 
 Using a more specific ontology subtopic (e.g. replacing `"Place"` with `"City"` above) may help to
 narrow down the possibilities and provide more relevant search results for your query.
