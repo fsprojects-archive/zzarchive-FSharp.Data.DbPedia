@@ -12,7 +12,7 @@ See the [Developer Guide](DEVGUIDE.md) for information on building, testing and 
 
 Head (branch ``master``), Windows Server 2012 (Appveyor)  [![Build status](https://ci.appveyor.com/api/projects/status/y6d9vcdeov9rqcgd/branch/master)](https://ci.appveyor.com/project/fsgit/fsharp-data-dbpedia)
 
-Head (branch ``master``), OSX (Travis)  [![Build status](https://travis-ci.org/fsprojects/FSharp.Data.DbPedia.svg?branch=master)
+Head (branch ``master``), OSX (Travis)  [![Build status](https://travis-ci.org/fsprojects/FSharp.Data.DbPedia.svg?branch=master)](https://travis-ci.org/fsprojects/FSharp.Data.DbPedia)
 
 
 
