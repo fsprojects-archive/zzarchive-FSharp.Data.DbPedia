@@ -1,4 +1,7 @@
-# F# DBpedia type provider
+[![Issue Stats](http://issuestats.com/github/fsprojects/FSharp.Data.DbPedia/badge/issue)](http://issuestats.com/github/fsprojects/FSharp.Data.DbPedia)
+[![Issue Stats](http://issuestats.com/github/fsprojects/FSharp.Data.DbPedia/badge/pr)](http://issuestats.com/github/fsprojects/FSharp.Data.DbPedia)
+
+# F# DBpedia type provider [![NuGet Status](http://img.shields.io/nuget/v/FSharp.Data.DbPedia.svg?style=flat)](https://www.nuget.org/packages/FSharp.Data.DbPedia/)
 
 The F# DBpedia type provider (`FSharp.Data.DbPedia.dll`) implements everything you need to access Wikipedia data in your F# applications 
 and scripts.
